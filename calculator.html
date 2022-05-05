@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+
+</head>
+<body>
+    <div style="background-color: #ec0080; color: #fff; margin: 3rem; border-radius: 1.5rem; padding: 2rem;max-width: 400px;">
+        <div>
+            <h1>Savings Calculator</h1>
+            <h3>Enter number of cups</h3>
+            <p>Use the slider or type in a number (1-1,000).</p>
+            <div>
+                <input id="cupsInput" type="number" value="100" style="width:70%">
+            </div>
+            <div>
+                <input id="cupsSlider" type="range" min="1" max="1000" value="100" style="width:70%">
+            </div>
+        </div>
+        <button id="calc" style="background-color: #ffcb20; color: #fff; border-radius: 0.8rem; line-height: 1.8rem; font-weight: bold; font-size: 1.4rem; padding: 0.4rem;">Calculate!</button>
+        <div id="results" style="display:none">
+            <h3>Total Savings</h3>
+            <p id="resultPlastic"></p>
+            <p id="resultCO2"></p>
+        </div>
+    </div>
+    <script>
+        function setup() {
+            var slider = document.getElementById('cupsSlider');
+            var input = document.getElementById('cupsInput');
+            var calc = document.getElementById('calc');
+            var results = document.getElementById('results');
+            var plastic = document.getElementById('resultPlastic');
+            var carbon = document.getElementById('resultCO2');
+            
+            slider.addEventListener('input', function(){ 
+                input.value = this.value;
+            });
+            input.addEventListener('input', function(){ 
+                slider.value = this.value;
+            });
+            calc.addEventListener('click', function(){
+                results.style.display = 'block';
+                totalPlastic = input.value * 20;
+                totalCO2 = input.value * 63.8;
+                roundCO2 = totalCO2.toFixed(1)
+                if (totalPlastic > 1000){
+                    plasticKG = totalPlastic / 1000;
+                    roundKGP = plasticKG.toFixed(2);
+                    plastic.innerHTML = 'Plastic saved: ' + roundKGP + 'kg';
+                } else {
+                    plastic.innerHTML = 'Plastic saved: ' + totalPlastic + 'g';
+                };
+                if (totalCO2 > 1000){
+                    carbonKG = totalCO2 / 1000;
+                    roundKGC = carbonKG.toFixed(2);
+                    carbon.innerHTML = 'Emissions avoided: ' + roundKGC + 'kgCO2e';
+                } else {
+                    carbon.innerHTML = 'Emissions avoided: ' + roundCO2  + 'gCO2e';
+                };
+            });
+            }
+            
+        setup();
+    </script>
+</body>
+</html>
